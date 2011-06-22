@@ -98,39 +98,39 @@ class dzapi{
     **/
 
 	
-	public static function lookup( $elment_id, $type, $options = false ) {
+	public static function lookup( $element_id, $type, $options = false ) {
 		
-		if(isset($elment_id) && !empty($elment_id) && isset($type) && isset($options)){
+		if(isset($element_id) && !empty($element_id) && isset($type) && isset($options)){
 
 			switch($type){
 				
 				case 'artist':
 					//options : similar_artists,discography,discography_details
 					if($options == false){
-						self::$current_url .= 'lookup/artist/?id='.$elment_id.'&output=json';
+						self::$current_url .= 'lookup/artist/?id='.$element_id.'&output=json';
 					}else{
-						self::$current_url .= 'lookup/artist/?id='.$elment_id.'&options=similar_artists,discography,discography_details&output=json';
+						self::$current_url .= 'lookup/artist/?id='.$element_id.'&options=similar_artists,discography,discography_details&output=json';
 						
 					}
 				break;
 				
 				case 'album':
-					self::$current_url .= 'lookup/album/?id='.$elment_id.'&index='.$start.'&limit='.$limit.'&output=json';
+					self::$current_url .= 'lookup/album/?id='.$element_id.'&index='.$start.'&limit='.$limit.'&output=json';
 				break;
 				
 				case 'track':
 					//options : tracks
 					
 					if($options == false){
-						self::$current_url .= 'lookup/track/?id='.$elment_id.'&output=json';
+						self::$current_url .= 'lookup/track/?id='.$element_id.'&output=json';
 					}else{
-						self::$current_url .= 'lookup/track/?id='.$elment_id.'&options=tracks&output=json';		
+						self::$current_url .= 'lookup/track/?id='.$element_id.'&options=tracks&output=json';		
 					}
 					
 				break;
 				
 				default:
-					self::$current_url .= 'lookup/track/?id='.$elment_id.'&index='.$start.'&limit='.$limit.'&output=json';
+					self::$current_url .= 'lookup/track/?id='.$element_id.'&index='.$start.'&limit='.$limit.'&output=json';
 				break;
 
 			}
