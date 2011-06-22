@@ -55,7 +55,9 @@ class dzapi{
 		if(isset($query) && !empty($query) && isset($type) && isset($start) && isset($limit)){
 			
 			self::$current_url = self::$api_url;
-		
+
+			$query = urlencode($query);
+
 			switch($type){
 				
 				case 'artist':
