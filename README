@@ -1,0 +1,182 @@
+DEEZER SIMPLE API - PHP Lib
+
+This php lib is an open source wrapper to get metadata from Deezer Simple API.
+
+Requierement :
+
+- PHP 5.x
+- cURL
+
+Optional
+
+(if you want enabled memcached support)
+
+- Memcached
+- PECL Memcache
+
+How to use Deezer Simple API ?
+
+require '../classes/class.dzapi.php';
+$api = new dzapi();
+
+Search Function : 
+
+search($query, $type, $start, $limit);
+
+$query - string : Query string
+$type  - string : Search filter (artist, album or track)
+$start - int    : Start position of the search result
+$limit - int    : Number of result items.
+
+Exemple : $api->search('eminem', 'artist');
+
+Lookup Function :
+
+$element_id - int    : Id to lookup (artist_id, album_id, track_id)
+$type       - string : Type of element_id (artist, album, track)
+$options    - bool   : Activate/Desactivate lookup result data extend
+
+Exemple : $api->lookup('13', 'artist', true));
+
+
+
+
+
+Deezer Informations
+
+Deezer provides 4 public methods :
+
+- Search
+- Lookup artist
+- Lookup album
+- Lookup track
+
+API Search Methods :
+
+You can search artist, album, track and get metadata.
+
+Exemple :
+
+<?xml version="1.0" encoding="UTF-8"?>
+
+<search>
+
+  <total_results>22</total_results>
+  <start_index>0</start_index>
+  <items_per_page>2</items_per_page>
+
+  <artists>
+
+    <artist>
+      <id>13</id>
+      <name>Eminem</name>
+      <url>http://www.deezer.com/fr/music/eminem</url>
+      <image>http://images.deezer.com/images/artist/...jpg</image>
+    </artist>
+
+    <artist>
+      <id>114452</id>
+      <name>Various Artists - Eminem Tribute</name>
+      <url>http://www.deezer.com/fr/music/various-artists-eminem-tribute</url>
+      <image>http://images.deezer.com/images/artist//90x90-000000-80-0-0.jpg</image>
+    </artist>
+
+  </artists>
+
+</search>
+
+
+API Lookup Artist / Album / Track :
+
+You can lookup metadata of specific artist/album/track.
+
+
+<?xml version="1.0" encoding="UTF-8"?>
+<artist>
+
+  <id>13</id>
+  <name>Eminem</name>
+  <url>http://www.deezer.com/fr/music/eminem</url>
+  <image>http://cdn-images.deezer.com/images/artist/740f4e5d2bc26ff81a184ceaa79dfdd5/90x90-000000-80-0-0.jpg</image>
+
+  <similar_artists>
+
+    <artist>
+      <id>d080728d</id>
+      <name>50 Cent</name>
+      <url>http://www.deezer.com/fr/music/50-cent</url>
+      <image>http://cdn-images.deezer.com/images/artist/5c4a1327c841548e3c3549629e2458af/90x90-000000-80-0-0.jpg>
+    </artist>
+
+    <artist>
+      <id>8bdb2ad6</id>
+      <name>Obie Trice</name>
+      <url>http://www.deezer.com/fr/music/obie-trice</url>
+      <image>http://cdn-images.deezer.com/images/artist/c0132ff5affcb34442b9508bd6484a48/90x90-000000-80-0-0.jpg>
+    </artist>
+
+  </similar_artists>
+
+  <discography>
+
+    <album>
+
+      <id>350198</id>
+      <name>Relapse (2009)</name>
+      <url>http://www.deezer.com/fr/music/eminem/relapse-2009-350198</url>
+      <image>http://cdn-images.deezer.com/images/cover/ca352d5a5537329b60df882a71b5204f/150x150-000000-80-0-0.jpg</image>
+      <nb_tracks>20</nb_tracks>
+      <nb_disks>1</nb_disks>
+      <year>2009</year>
+
+      <tracks>
+
+        <track>
+          <id>3729739</id>
+          <name>Dr. West</name>
+          <url>http://www.deezer.com/listen-3729739</url>
+          <duration>89</duration>
+          <rank>56</rank>
+        </track>
+
+        <track>
+          <id>3729740</id>
+          <name>3 a.m.</name>
+          <url>http://www.deezer.com/listen-3729740</url>
+          <duration>320</duration>
+          <rank>58</rank>
+        </track>
+
+      </tracks>
+
+    </album>
+
+    <album>
+
+      <id>161523</id>
+      <name>Eminem Presents The Re-Up (2006)</name>
+      <url>http://www.deezer.com/fr/music/eminem/eminem-presents-the-re-up-2006-161523</url>
+      <image>http://cdn-mages.deezer.com/images/cover/90b0b4820d5483d707132b79605d870b/150x150-000000-80-0-0.jpg</image>
+      <nb_tracks>23</nb_tracks>
+      <nb_disks>1</nb_disks>
+      <year>2006</year>
+
+      <tracks>
+
+        <track>
+          <id>1575461</id>
+          <name>Shady Narcotics</name>
+          <url>http://www.deezer.com/listen-1575461</url>
+          <duration>56</duration>
+          <rank>12</rank>
+        </track>
+
+      </tracks>
+
+    </album>
+
+  </discography>
+
+</artist>
+
+Official documentation : http://www.deezer.com/fr/developers/simpleapi/ 
