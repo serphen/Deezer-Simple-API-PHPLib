@@ -17,7 +17,7 @@
    limitations under the License.
 
 */
-
+require 'class.cache.php';
 
 
 class dzapi{
@@ -34,6 +34,7 @@ class dzapi{
 	public function __construct(){
 	
 		self::$current_url = self::$api_url;	
+		
 	}
 	
 	
@@ -146,43 +147,71 @@ class dzapi{
     **/
 	
 	private static function getRemoteData(){
-	
-			$rCurl = curl_init();
-			
-			curl_setopt($rCurl, CURLOPT_URL, self::$current_url);
-			curl_setopt($rCurl, CURLOPT_RETURNTRANSFER, true);
 		
-			$data = curl_exec($rCurl);
-
-			$error_no = curl_errno($rCurl);
-			curl_close($rCurl);
+			$memcache = new cache;
 			
-			self::$current_url = self::$api_url;	
+			$cacheKey = md5(self::$current_url);
 			
-			if($error_no != 0){
-				
-				self::$result = false;
-				
-				return false;
-				
+			if($memcache->active == true){
+			
+				$cached   = $memcache->getKey( $cacheKey );
+		
 			}else{
+	
+				$cached = false;	
+			}
+			
+		
+			if($cached != false){
+		
+				self::$result = $cached;
 				
-				$data_decode = json_decode($data);
+				return true;
+			
+			}else{
+		
+				$rCurl = curl_init();
 				
-				if(isset($data_decode->errors)){
+				curl_setopt($rCurl, CURLOPT_URL, self::$current_url);
+				curl_setopt($rCurl, CURLOPT_RETURNTRANSFER, true);
+			
+				$data = curl_exec($rCurl);
+	
+				$error_no = curl_errno($rCurl);
+				curl_close($rCurl);		
+				
+				self::$current_url = self::$api_url;
+
+				
+				if($error_no != 0){
 					
-					self::$error = $data_decode->errors;
 					self::$result = false;
-					
+
 					return false;
 					
 				}else{
-			
-					self::$result = $data_decode;
 					
-					return true;
-		
+					$data_decode = json_decode($data);
+					
+					if(isset($data_decode->errors)){
+				
+						self::$error = $data_decode->errors;
+						self::$result = false;
+					
+						return false;
+						
+					}else{
+				
+						self::$result = $data_decode;
+						if($memcache->active == true){
+							$memcache->setKey($cacheKey,  $data_decode);
+						}
+				
+						return true;
+			
+					}
 				}
+			
 			}
 			
 			
