@@ -6,6 +6,6 @@ $api = new dzapi();
 
 
 echo "Search";
-print_r($api->search('eminem', 'artist'));
+print_r($api->search('madonna', 'artist'));
 
 ?>
